@@ -69,3 +69,170 @@ npm start frontend
 | Frontend     | React              |
 
 ---
+
+
+
+# 🚀 Version 2 – RAG with Evaluation Layer
+
+## 📌 Overview
+
+* **LLM**: Ollama (phi3:mini)
+* **Embeddings**: Chroma + Ollama (`nomic-embed-text`)
+* **Vector Store**: In-memory
+* **Evaluation Layer**: LLM-based (Answer scoring + PASS/FAIL decision)
+
+---
+
+## 🧠 What’s New in Version 2?
+
+* ✅ Added **LLM-based evaluation layer**
+* ✅ Supports **unstructured transcript → Q&A extraction**
+* ✅ Scores candidate answers:
+
+  * Correctness
+  * Completeness
+  * Clarity
+* ✅ Generates **final hiring decision (PASS / FAIL)**
+
+---
+
+## 🏗️ Architecture Diagram
+
+```mermaid
+flowchart TD
+
+A[User Input / Audio Transcript]
+    --> B[Transcript Processing]
+
+B --> C[Q&A Extraction (LLM)]
+C --> D[Retriever (Chroma Vector DB)]
+D --> E[Context + Question]
+
+E --> F[LLM (Ollama)]
+F --> G[Generated Answer]
+
+G --> H[Evaluation Layer (LLM-as-Judge)]
+H --> I[Scoring Engine]
+
+I --> J[Final Result]
+J --> K[PASS / FAIL + Feedback]
+
+style H fill:#f9f,stroke:#333,stroke-width:2px
+style I fill:#bbf,stroke:#333,stroke-width:2px
+```
+
+---
+
+## ⚙️ Evaluation Flow
+
+```text
+Raw Transcript
+   ↓
+Q&A Extraction (LLM)
+   ↓
+Ideal Answer Generation (LLM)
+   ↓
+Answer Comparison
+   ↓
+Scoring (Correctness, Completeness, Clarity)
+   ↓
+Final Decision (PASS / FAIL)
+```
+
+---
+
+## 📊 Scoring Logic
+
+Each answer is evaluated on:
+
+| Metric       | Weight |
+| ------------ | ------ |
+| Correctness  | 50%    |
+| Completeness | 30%    |
+| Clarity      | 20%    |
+
+**Final Score = Weighted Average**
+
+```text
+PASS if score ≥ 3.5  
+FAIL if score < 3.5
+```
+
+---
+
+## ⚙️ Setup Instructions
+
+### 1️⃣ Install LLM
+
+```bash
+ollama pull phi3:mini
+```
+
+---
+
+### 2️⃣ Install Embeddings Model
+
+```bash
+ollama pull nomic-embed-text
+```
+
+---
+
+### 3️⃣ Start Ollama
+
+```bash
+ollama serve
+```
+
+---
+
+## ▶️ Run Application
+
+```bash
+npm start backend
+npm start frontend
+```
+
+---
+
+## 🧪 Example Output
+
+```json
+{
+  "finalScore": 3.8,
+  "decision": "PASS",
+  "details": [
+    {
+      "question": "What is JVM?",
+      "score": 4.2,
+      "feedback": "Good understanding with correct fundamentals"
+    }
+  ]
+}
+```
+
+---
+
+## 🧩 Tech Stack Summary
+
+| Component    | Tool Used          |
+| ------------ | ------------------ |
+| LLM          | Ollama (phi3:mini) |
+| Embeddings   | nomic-embed-text   |
+| Vector Store | Chroma (in-memory) |
+| Evaluation   | LLM-as-Judge       |
+| Backend      | Node.js            |
+| Frontend     | React              |
+
+---
+
+## 🔥 Future Improvements
+
+* 🔄 Replace LLM-generated ideal answers with RAG-based ground truth
+* ⚡ Add streaming responses
+* 📊 Add evaluation dashboard (accuracy, hallucination rate)
+* 🧠 Multi-model evaluation (cross-check scoring)
+* 🎤 Real-time voice interview + scoring
+
+---
+
