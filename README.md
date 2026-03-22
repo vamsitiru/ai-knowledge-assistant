@@ -1,9 +1,16 @@
-# 🚀 Version 1 – Local RAG Setup
+# 🚀 RAG Interview Evaluator
+
+---
+
+<details>
+<summary><b>📦 Version 1 – Local RAG Setup (Click to Expand)</b></summary>
+
+<br/>
 
 ## 📌 Overview
 
 * **LLM**: Ollama (phi3:mini)
-* **Embeddings**:  Ollama (`nomic-embed-text`)
+* **Embeddings**: Chroma + Ollama (`nomic-embed-text`)
 * **Vector Store**: In-memory
 
 ---
@@ -68,11 +75,14 @@ npm start frontend
 | Backend      | Node.js            |
 | Frontend     | React              |
 
+</details>
+
 ---
 
+<details>
+<summary><b>🚀 Version 2 – RAG with Evaluation Layer (Click to Expand)</b></summary>
 
-
-# 🚀 Version 2 – RAG with Evaluation Layer
+<br/>
 
 ## 📌 Overview
 
@@ -143,52 +153,21 @@ Final Decision (PASS / FAIL)
 
 ## 📊 Scoring Logic
 
-Each answer is evaluated on:
-
 | Metric       | Weight |
 | ------------ | ------ |
 | Correctness  | 50%    |
 | Completeness | 30%    |
 | Clarity      | 20%    |
 
-**Final Score = Weighted Average**
-
-```text
-PASS if score ≥ 3.5  
-FAIL if score < 3.5
-```
-
----
-
-## ⚙️ Setup Instructions
-
-### 1️⃣ Install LLM
-
-```bash
-ollama pull phi3:mini
-```
-
----
-
-### 2️⃣ Install Embeddings Model
-
-```bash
-ollama pull nomic-embed-text
-```
-
----
-
-### 3️⃣ Start Ollama
-
-```bash
-ollama serve
-```
+**PASS if score ≥ 3.5**
+**FAIL if score < 3.5**
 
 ---
 
 ## ▶️ Run Application
 
 ```bash
+ollama serve
 npm start backend
 npm start frontend
 ```
@@ -213,26 +192,13 @@ npm start frontend
 
 ---
 
-## 🧩 Tech Stack Summary
-
-| Component    | Tool Used          |
-| ------------ | ------------------ |
-| LLM          | Ollama (phi3:mini) |
-| Embeddings   | nomic-embed-text   |
-| Vector Store | Chroma (in-memory) |
-| Evaluation   | LLM-as-Judge       |
-| Backend      | Node.js            |
-| Frontend     | React              |
-
----
-
 ## 🔥 Future Improvements
 
 * 🔄 Replace LLM-generated ideal answers with RAG-based ground truth
 * ⚡ Add streaming responses
-* 📊 Add evaluation dashboard (accuracy, hallucination rate)
-* 🧠 Multi-model evaluation (cross-check scoring)
+* 📊 Add evaluation dashboard
 * 🎤 Real-time voice interview + scoring
 
----
+</details>
 
+---
